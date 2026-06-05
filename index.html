@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="PDF No-Black Color Changer - ersetzt schwarze und sehr dunkle Bereiche direkt im Browser."
+    />
+    <title>PDF No-Black Color Changer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <main class="app">
+        <section class="hero card">
+          <div class="hero-copy">
+            <p class="eyebrow">Browser-only PDF Tool</p>
+            <h1>PDF No-Black Color Changer</h1>
+            <p class="subtitle">
+              Ersetzt schwarze oder sehr dunkle Bereiche durch dunkle Ersatzfarben
+              - direkt im Browser.
+            </p>
+            <p class="privacy-note">
+              Deine PDF wird lokal im Browser verarbeitet. Sie wird nicht hochgeladen.
+            </p>
+          </div>
+          <div class="hero-badge">
+            <span>Kein Python nötig</span>
+            <span>Keine Server-Pflicht</span>
+          </div>
+        </section>
+
+        <section class="grid">
+          <section class="card panel">
+            <h2>1. PDF auswählen</h2>
+            <p class="panel-note">
+              Drag & Drop oder Datei-Dialog. Nur PDF-Dateien werden akzeptiert.
+            </p>
+
+            <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="PDF hochladen">
+              <div class="dropzone-inner">
+                <strong>PDF hier ablegen</strong>
+                <span>oder den Button verwenden</span>
+              </div>
+            </div>
+
+            <div class="actions-row">
+              <button id="pick-file-btn" class="primary" type="button">PDF auswählen</button>
+              <span id="file-name" class="file-name">Noch keine PDF ausgewählt.</span>
+            </div>
+
+            <input id="pdf-input" type="file" accept="application/pdf,.pdf" hidden />
+          </section>
+
+          <section class="card panel">
+            <h2>2. Modus & Einstellungen</h2>
+
+            <label class="field">
+              <span class="field-label">Modus</span>
+              <select id="mode-select">
+                <option value="standard">Schwarz / dunkle Farbe ersetzen</option>
+                <option value="no-black">Drucker hat keine schwarze Farbe - alles außer Schwarz verwenden</option>
+              </select>
+            </label>
+
+            <div class="info-box" id="mode-info">
+              Dieser Modus ersetzt schwarze oder sehr dunkle Bereiche durch eine dunkle Ersatzfarbe.
+              Dadurch soll das PDF möglichst ähnlich aussehen, aber ohne reines Schwarz ausgegeben werden.
+              Ob der Drucker wirklich keine schwarze Tinte nutzt, hängt vom Druckertreiber und Farbmanagement ab.
+            </div>
+
+            <label class="field">
+              <span class="field-label">Qualitätsstufe / Render-Skalierung</span>
+              <select id="quality-select">
+                <option value="low">Niedrig</option>
+                <option value="medium" selected>Mittel</option>
+                <option value="high">Hoch</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Schwarz-Schwellwert: <strong id="threshold-value">100</strong></span>
+              <input id="threshold-slider" type="range" min="40" max="180" value="100" />
+            </label>
+
+            <label class="field">
+              <span class="field-label">Ziel-Farbe</span>
+              <select id="color-select">
+              <option value="magenta" selected>Dunkles Magenta</option>
+              <option value="blue">Dunkles Blau</option>
+              <option value="violet">Dunkles Violett</option>
+              <option value="red">Dunkles Rot</option>
+              <option value="custom">Benutzerdefinierte Farbe</option>
+            </select>
+          </label>
+
+            <label class="field custom-color-field" id="custom-color-field" hidden>
+              <span class="field-label">Benutzerdefinierte Farbe</span>
+              <input id="custom-color-input" type="color" value="#5a0037" />
+            </label>
+
+            <label class="checkbox">
+              <input id="preserve-colored" type="checkbox" checked />
+              <span>Farbige Inhalte möglichst erhalten</span>
+            </label>
+          </section>
+        </section>
+
+        <section class="card panel">
+          <h2>3. Umwandeln</h2>
+          <p class="panel-note">
+            Die Seite wird vollständig lokal im Browser gerendert. Danach erhältst du eine neue PDF-Datei als Download.
+          </p>
+
+          <div class="actions-row">
+            <button id="convert-btn" class="primary" type="button" disabled>PDF umwandeln</button>
+            <button id="download-btn" class="secondary" type="button" hidden>Umgewandelte PDF herunterladen</button>
+          </div>
+
+          <div class="progress-wrap" aria-live="polite">
+            <div class="progress-text" id="progress-text">Bereit.</div>
+            <progress id="progress-bar" value="0" max="100"></progress>
+          </div>
+
+          <div id="status" class="status" hidden></div>
+          <div id="result" class="result" hidden></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="lib/pdf.min.js"></script>
+    <script src="lib/pdf-lib.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
