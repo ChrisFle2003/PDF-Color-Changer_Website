@@ -1,4 +1,4 @@
-# PDF No-Black Color Changer
+# PDF No-Black Color Changer for the Printer
 
 Browser-based web app for replacing black and very dark pixels in PDFs with dark substitute colors. Processing happens locally in the browser. No Python or command line is required for normal use.
 
