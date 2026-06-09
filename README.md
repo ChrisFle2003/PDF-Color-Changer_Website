@@ -1,61 +1,64 @@
 # PDF No-Black Color Changer
 
-Browserbasierte Web-App zum Ersetzen schwarzer und sehr dunkler Pixel in PDFs durch dunkle Ersatzfarben. Die Verarbeitung läuft lokal im Browser. Normale Nutzer brauchen kein Python und keine Kommandozeile.
+Browser-based web app for replacing black and very dark pixels in PDFs with dark substitute colors. Processing happens locally in the browser. No Python or command line is required for normal use.
 
-https://chrisfle2003.github.io/PDF-Color-Changer_Website/
+## Links
 
-## Was macht das Tool?
+- GitHub profile: [ChrisFle2003](https://github.com/ChrisFle2003)
+- Repository: [PDF-Color-Changer_Website](https://github.com/ChrisFle2003/PDF-Color-Changer_Website/tree/main)
 
-- Rendert jede PDF-Seite im Browser mit PDF.js
-- Liest die Pixel über Canvas/ImageData aus
-- Ersetzt schwarze, fast schwarze und dunkelgraue Bereiche durch dunkle Ersatzfarben
-- Exportiert die bearbeiteten Seiten wieder als rasterisierte PDF mit pdf-lib
+## What the tool does
 
-## Für wen ist das gedacht?
+- Renders each PDF page in the browser with PDF.js
+- Reads pixels through Canvas/ImageData
+- Replaces black, near-black, and dark gray areas with dark substitute colors
+- Exports the processed pages as a rasterized PDF with pdf-lib
 
-- Für normale Nutzer, die eine PDF optisch ohne reines Schwarz ausgeben möchten
-- Für Anwender, die keine Python-Installation möchten
-- Für einfache lokale Nutzung ohne Server und ohne Build-System
+## Who it is for
 
-## Nutzung
+- People who want a PDF output without pure black
+- Users who do not want a Python installation
+- Simple local use without a server or build system
 
-1. `index.html` im Browser öffnen
-2. PDF auswählen oder per Drag & Drop ablegen
-3. Modus und Einstellungen wählen
-4. Auf `PDF umwandeln` klicken
-5. Die neue PDF mit `Umgewandelte PDF herunterladen` speichern
+## Usage
 
-Wenn dein Browser lokale `file://`-Skripte oder WebAssembly blockiert, öffne die Seite über einen kleinen lokalen Webserver im Projektordner:
+1. Open `index.html` in a browser
+2. Select a PDF or drag and drop one onto the page
+3. Choose a mode and settings
+4. Click `Convert PDF`
+5. Save the new file with `Download Converted PDF`
+
+If your browser blocks local `file://` scripts or WebAssembly, open the page through a small local web server in the project folder:
 
 ```bash
 python3 -m http.server 4173
 ```
 
-Dann im Browser `http://127.0.0.1:4173/index.html` aufrufen.
+Then open `http://127.0.0.1:4173/index.html` in your browser.
 
-## Wichtige Hinweise
+## Important Notes
 
-- Höhere Qualitätsstufen erzeugen größere Dateien und brauchen mehr Zeit
-- Die Ausgabe ist rasterisiert, daher ist Text nach der Umwandlung meist nicht mehr als echter PDF-Text auswählbar
-- Das Tool verändert RGB-Farben optisch im PDF
-- Es kann nicht garantieren, dass jeder Druckertreiber wirklich keine schwarze Patrone nutzt, weil Druckertreiber und Farbmanagement Farben intern neu mischen können
+- Higher quality levels produce larger files and take more time
+- The output is rasterized, so text is usually no longer selectable as native PDF text after conversion
+- The tool changes RGB colors visually inside the PDF
+- It cannot guarantee that every printer driver will avoid black ink, because drivers and color management may remap colors internally
 
-## No-Black-Modus
+## No-Black Mode
 
-Der Spezialmodus `Drucker hat keine schwarze Farbe - alles außer Schwarz verwenden` ersetzt dunkle Inhalte deutlich aggressiver. Er ist für eine optische Annäherung gedacht, nicht für eine technische Garantie auf Tintenkanal-Ebene.
+The special mode `Printer has no black ink - use everything except black` replaces dark content more aggressively. It is intended as a visual approximation, not a technical guarantee at the ink-channel level.
 
-## Entwickler-Hinweis
+## Developer Note
 
-- Die Farblogik basiert auf dem ursprünglichen Python-Prototyp `pdf-color-changer.py`
-- Die Hauptbedienung ist jetzt vollständig browserbasiert
-- Eine Python-CLI kann optional als ergänzende Variante bestehen bleiben
-- Pyodide wäre für Experimente mit Python im Browser möglich, ist hier aber bewusst **nicht** die Hauptlösung
+- The color logic is based on the original Python prototype `pdf-color-changer.py`
+- The main workflow is now fully browser-based
+- A Python CLI can remain as an optional companion variant
+- Pyodide could be used for browser Python experiments, but it is intentionally **not** the primary solution here
 
-## Dateien
+## Files
 
 - `index.html`
 - `style.css`
 - `app.js`
 - `README.md`
 
-Optional kann `lib/` lokale Bibliotheksdateien enthalten, damit die Seite ohne Server direkt aus dem Dateisystem läuft.
+`lib/` can contain local library files so the page also runs directly from the file system without a server.

@@ -110,8 +110,8 @@ function updateThresholdLabel() {
 function updateModeInfo() {
   const isNoBlackMode = elements.modeSelect.value === MODE_NO_BLACK;
   elements.modeInfo.textContent = isNoBlackMode
-    ? "Dieser Modus ersetzt auch dunkelgraue und fast schwarze Bereiche deutlich aggressiver. Er ist eine optische Annäherung, keine Garantie auf Tintenkanäle oder Druckertreiber-Interna."
-    : "Dieser Modus ersetzt schwarze oder sehr dunkle Bereiche durch eine dunkle Ersatzfarbe. Dadurch soll das PDF möglichst ähnlich aussehen, aber ohne reines Schwarz ausgegeben werden. Ob der Drucker wirklich keine schwarze Tinte nutzt, hängt vom Druckertreiber und Farbmanagement ab.";
+    ? "This mode replaces dark gray and near-black areas much more aggressively. It is a visual approximation, not a guarantee about ink channels or driver internals."
+    : "This mode replaces black or very dark areas with a dark substitute color. The goal is to keep the PDF visually similar while avoiding pure black output. Whether the printer actually avoids black ink depends on the driver and color management.";
 }
 
 function updateColorField() {
@@ -120,7 +120,7 @@ function updateColorField() {
 }
 
 function setIdleState() {
-  elements.progressText.textContent = "Bereit.";
+  elements.progressText.textContent = "Ready.";
   elements.progressBar.value = 0;
   elements.convertBtn.disabled = !state.file || state.processing;
 }
@@ -186,10 +186,10 @@ function setFile(file) {
   if (!isPdfFile(file)) {
     revokeResultUrl();
     state.file = null;
-    elements.fileName.textContent = "Noch keine PDF ausgewählt.";
+    elements.fileName.textContent = "No PDF selected yet.";
     elements.pdfInput.value = "";
     setIdleState();
-    showError("Bitte eine PDF-Datei auswählen.");
+    showError("Please select a PDF file.");
     return;
   }
 
@@ -314,7 +314,7 @@ function canvasToBlob(canvas) {
   return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => {
       if (!blob) {
-        reject(new Error("Canvas konnte nicht als Bild gespeichert werden."));
+        reject(new Error("Canvas could not be saved as an image."));
         return;
       }
       resolve(blob);
@@ -331,7 +331,7 @@ function normalizeProcessingError(error) {
   const lower = message.toLowerCase();
 
   if (lower.includes("password")) {
-    return "Die PDF ist passwortgeschützt und konnte nicht gelesen werden.";
+    return "The PDF is password-protected and could not be read.";
   }
 
   if (
@@ -342,7 +342,7 @@ function normalizeProcessingError(error) {
     lower.includes("out of memory") ||
     lower.includes("size limit")
   ) {
-    return "PDF ist zu groß oder der Browser-Speicher reicht nicht aus.";
+    return "The PDF is too large or the browser does not have enough memory.";
   }
 
   if (
@@ -351,14 +351,14 @@ function normalizeProcessingError(error) {
     lower.includes("corrupt") ||
     lower.includes("unexpected")
   ) {
-    return "PDF konnte nicht gelesen werden.";
+    return "The PDF could not be read.";
   }
 
   if (lower.includes("render")) {
-    return "Konvertierung fehlgeschlagen.";
+    return "Conversion failed.";
   }
 
-  return "Konvertierung fehlgeschlagen.";
+  return "Conversion failed.";
 }
 
 async function loadPdfDocument(file) {
@@ -406,17 +406,17 @@ async function startConversion() {
   }
 
   if (!state.file) {
-    showError("Bitte zuerst eine PDF-Datei auswählen.");
+    showError("Please select a PDF file first.");
     return;
   }
 
   if (!isPdfFile(state.file)) {
-    showError("Bitte eine PDF-Datei auswählen.");
+    showError("Please select a PDF file.");
     return;
   }
 
   if (!window.pdfjsLib || !window.PDFLib) {
-    showError("Die PDF-Bibliotheken konnten nicht geladen werden. Bitte die Seite neu laden.");
+    showError("The PDF libraries could not be loaded. Please reload the page.");
     return;
   }
 
@@ -424,7 +424,7 @@ async function startConversion() {
   clearResult();
   clearStatus();
   setProcessingState(true);
-  elements.progressText.textContent = "PDF wird geladen...";
+  elements.progressText.textContent = "Loading PDF...";
   elements.progressBar.value = 2;
 
   try {
@@ -434,7 +434,7 @@ async function startConversion() {
     const totalPages = pdf.numPages;
 
     for (let pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
-      elements.progressText.textContent = `Seite ${pageNumber} von ${totalPages} wird verarbeitet...`;
+      elements.progressText.textContent = `Processing page ${pageNumber} of ${totalPages}...`;
       elements.progressBar.value = Math.round(((pageNumber - 1) / totalPages) * 100);
       const pdfPage = await pdf.getPage(pageNumber);
       await processPage(pdfPage, outPdf, settings, pageNumber, totalPages);
@@ -450,10 +450,10 @@ async function startConversion() {
     elements.downloadBtn.hidden = false;
     elements.downloadBtn.disabled = false;
 
-    elements.progressText.textContent = "Fertig.";
+    elements.progressText.textContent = "Done.";
     elements.progressBar.value = 100;
-    setStatus("Die umgewandelte PDF ist bereit.", "success");
-    setResult(`Ausgabe bereit: ${state.resultName}`);
+    setStatus("The converted PDF is ready.", "success");
+    setResult(`Output ready: ${state.resultName}`);
   } catch (error) {
     console.error(error);
     showError(normalizeProcessingError(error));
