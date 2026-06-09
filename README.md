@@ -2,6 +2,8 @@
 
 Browserbasierte Web-App zum Ersetzen schwarzer und sehr dunkler Pixel in PDFs durch dunkle Ersatzfarben. Die Verarbeitung läuft lokal im Browser. Normale Nutzer brauchen kein Python und keine Kommandozeile.
 
+https://chrisfle2003.github.io/PDF-Color-Changer_Website/
+
 ## Was macht das Tool?
 
 - Rendert jede PDF-Seite im Browser mit PDF.js
