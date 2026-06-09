@@ -5,7 +5,7 @@ Browser-based web app for replacing black and very dark pixels in PDFs with dark
 ## Links
 
 - GitHub profile: [ChrisFle2003](https://github.com/ChrisFle2003)
-- Repository: [PDF-Color-Changer_Website](https://github.com/ChrisFle2003/PDF-Color-Changer_Website/tree/main)
+- Repository: [PDF-Color-Changer_Website](https://chrisfle2003.github.io/PDF-Color-Changer_Website/)
 
 ## What the tool does
 
